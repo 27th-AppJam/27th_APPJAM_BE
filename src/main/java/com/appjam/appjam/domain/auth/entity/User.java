@@ -1,16 +1,16 @@
 package com.appjam.appjam.domain.auth.entity;
 import com.appjam.appjam.domain.auth.entity.enums.Role;
+import com.appjam.appjam.domain.board.entity.Board;
+import com.appjam.appjam.domain.board.entity.Review;
 import com.appjam.appjam.global.util.StringListConverter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.util.List;
 
 @Table(name = "user")
 @Entity
 @Getter
-@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -27,5 +27,9 @@ public class User {
     private String password;
     @Convert(converter = StringListConverter.class)
     private List<Role> roles;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Board> boards;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Review> reviews;
 }
