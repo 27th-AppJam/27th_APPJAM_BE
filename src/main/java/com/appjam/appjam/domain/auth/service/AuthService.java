@@ -26,7 +26,6 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
 
-
     @Transactional
     public void signupUser(SignupRequest request) {
         if(userRepository.existsUserByUserId(request.getUserId()))

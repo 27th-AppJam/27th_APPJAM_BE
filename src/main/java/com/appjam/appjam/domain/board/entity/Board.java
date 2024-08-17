@@ -1,6 +1,7 @@
 package com.appjam.appjam.domain.board.entity;
 
 import com.appjam.appjam.domain.auth.entity.User;
+import com.appjam.appjam.domain.board.entity.enums.BoardType;
 import com.appjam.appjam.global.BaseTime;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -26,17 +27,19 @@ public class Board extends BaseTime {
     private User user;
     @Column
     private String title;
-
+    @Column
+    private BoardType boardType;
     @Column
     private String content;
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviews = new ArrayList<>();
     @Builder
-    public Board(String title, String content, User user) {
+    public Board(String title, String content, User user, BoardType boardType) {
         this.title = title;
         this.content = content;
         this.user = user;
+        this.boardType = boardType;
     }
 
     public Board() {

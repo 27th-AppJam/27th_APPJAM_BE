@@ -4,6 +4,7 @@ import com.appjam.appjam.domain.auth.entity.User;
 import com.appjam.appjam.domain.auth.service.AuthService;
 import com.appjam.appjam.domain.board.entity.Board;
 import com.appjam.appjam.domain.board.entity.Review;
+import com.appjam.appjam.domain.board.entity.enums.BoardType;
 import com.appjam.appjam.domain.board.repository.BoardRepository;
 import com.appjam.appjam.domain.board.repository.ReviewRepository;
 import com.appjam.appjam.domain.board.request.CreateEditBoardRequest;
@@ -17,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,6 +34,7 @@ public class BoardService {
                 .title(request.getTitle())
                 .content(request.getContent())
                 .user(user)
+                .boardType(request.getBoardType())
                 .build();
         boardRepository.save(board);
     }
@@ -57,8 +58,8 @@ public class BoardService {
         boardRepository.deleteById(boardId);
     }
     @Transactional
-    public List<BoardView> getAllBoards() {
-        List<Board> boards = boardRepository.findAll();
+    public List<BoardView> getAllBoards(BoardType boardType) {
+        List<Board> boards = boardRepository.findAllByBoardType(boardType);
         return boards.stream().map((board)->BoardView.builder()
                 .id(board.getId())
                 .title(board.getTitle())

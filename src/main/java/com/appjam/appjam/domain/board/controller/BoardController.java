@@ -1,12 +1,11 @@
 package com.appjam.appjam.domain.board.controller;
+import com.appjam.appjam.domain.board.entity.enums.BoardType;
 import com.appjam.appjam.domain.board.request.CreateEditBoardRequest;
 import com.appjam.appjam.domain.board.request.ReviewRequest;
 import com.appjam.appjam.domain.board.response.BoardDetailView;
 import com.appjam.appjam.domain.board.response.BoardView;
-import com.appjam.appjam.domain.board.response.ReviewResponse;
 import com.appjam.appjam.domain.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,8 +16,8 @@ import java.util.List;
 public class BoardController {
     private final BoardService boardService;
     @GetMapping
-    public List<BoardView> getBoards() {
-        return boardService.getAllBoards();
+    public List<BoardView> getBoards(@RequestParam BoardType boardType) {
+        return boardService.getAllBoards(boardType);
     }
     @GetMapping("/{boardId}")
     public BoardDetailView getBoard(@PathVariable("boardId")Long boardId) {
