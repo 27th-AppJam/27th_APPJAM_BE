@@ -15,8 +15,8 @@ import java.util.List;
 @RequestMapping("/community")
 public class BoardController {
     private final BoardService boardService;
-    @GetMapping
-    public List<BoardView> getBoards(@RequestParam BoardType boardType) {
+    @GetMapping("/boardType/{boardType}")
+    public List<BoardView> getBoards(@PathVariable("boardType") BoardType boardType) {
         return boardService.getAllBoards(boardType);
     }
     @GetMapping("/{boardId}")
